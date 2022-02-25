@@ -56,6 +56,12 @@ function patch_aptx() {
   ${LINEAGE_ROOT}/prebuilts/extract-tools/linux-x86/bin/patchelf-0_9 --set-soname libaptXHD_encoder.so ${LINEAGE_ROOT}/${OUTDIR}/common/audio/lib64/libaptXHD_encoder.so
 }
 
+# Kludge l4t nvpmodel into running on android
+function patch_nvpmodel() {
+  ${LINEAGE_ROOT}/prebuilts/extract-tools/linux-x86/bin/patchelf-0_9 --set-interpreter /vendor/bin/ld-linux-aarch64.so.1 ${LINEAGE_ROOT}/${OUTDIR}/common/nvpmodel/bin64/nvpmodel
+  sed -i "s|/var/lib|/etc/lib|" ${LINEAGE_ROOT}/${OUTDIR}/common/nvpmodel/bin64/nvpmodel
+}
+
 # Fetch bootloader logos and verity images from nv-tegra
 function fetch_bmps() {
   NV_TEGRA_URL="https://nv-tegra.nvidia.com/gitweb/?p=tegra/prebuilts-device-nvidia.git;hb=rel-30-r2-partner;a=blob;f=platform/t210/assets/bmp"
@@ -76,4 +82,5 @@ patch_bup;
 patch_tegraflash;
 patch_tegrasign_v3;
 patch_aptx;
+#patch_nvpmodel;
 fetch_bmps;
