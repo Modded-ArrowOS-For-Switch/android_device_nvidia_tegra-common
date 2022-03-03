@@ -117,10 +117,14 @@ PRODUCT_PACKAGES += \
     libGLES_mesa
 else ifeq ($(TARGET_TEGRA_GPU),swiftshader)
 PRODUCT_PACKAGES += \
+    android.hardware.graphics.allocator@4.0-service.minigbm \
+    android.hardware.graphics.mapper@4.0-impl.minigbm \
+    android.hardware.graphics.composer@2.3-service \
+    android.hardware.graphics.composer@2.3-impl \
+    hwcomposer.drm_minigbm \
     libEGL_swiftshader \
     libGLESv1_CM_swiftshader \
-    libGLESv2_swiftshader \
-    libyuv
+    libGLESv2_swiftshader
 endif
 
 # Health HAL
