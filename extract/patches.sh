@@ -62,6 +62,12 @@ function patch_nvpmodel() {
   sed -i "s|/var/lib|/etc/lib|" ${LINEAGE_ROOT}/${OUTDIR}/common/nvpmodel/bin64/nvpmodel
 }
 
+# For some reason, pbc still reads its config from /system. Change that to vendor
+function patch_pbc() {
+  sed -i "s|/system/|/vendor/|" ${LINEAGE_ROOT}/${OUTDIR}/common/pbc/lib/hw/pbc2.tegra.so
+  sed -i "s|/system/|/vendor/|" ${LINEAGE_ROOT}/${OUTDIR}/common/pbc/lib64/hw/pbc2.tegra.so
+}
+
 # Fetch bootloader logos and verity images from nv-tegra
 function fetch_bmps() {
   NV_TEGRA_URL="https://nv-tegra.nvidia.com/gitweb/?p=tegra/prebuilts-device-nvidia.git;hb=rel-30-r2-partner;a=blob;f=platform/t210/assets/bmp"
@@ -83,4 +89,5 @@ patch_tegraflash;
 patch_tegrasign_v3;
 patch_aptx;
 #patch_nvpmodel;
+patch_pbc;
 fetch_bmps;
